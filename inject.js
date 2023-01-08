@@ -53,9 +53,6 @@ const anchorHandler = async (e) => {
 	const type = img.dataset.type;
 	let result = await chrome.storage.sync.get('count');
 	result = result.count || {};
-	console.log('in inject');
-	console.log(type);
-	console.log(result);
 	result[type] = 1 + (result[type] || 0);
 	chrome.storage.sync.set({count: result});
 	chrome.runtime.sendMessage({type: 'UPDATE_COUNT', data: {count: result[type], countType: type}});
