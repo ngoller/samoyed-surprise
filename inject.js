@@ -58,8 +58,12 @@ const anchorHandler = async (e) => {
 	chrome.runtime.sendMessage({type: 'UPDATE_COUNT', data: {count: result[type], countType: type}});
 };
 
-if (Math.random() < .5) {
+
+const standardChance = .01;
+const rareChance = .001;
+
+if (Math.random() < standardChance) {
 	addSamoyedImage(createStandardImage());
-} else if (Math.random() < 1) {
+} else if (Math.random() < rareChance) {
 	addSamoyedImage(createRareImage());
 }
