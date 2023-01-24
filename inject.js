@@ -59,8 +59,8 @@ const anchorHandler = async (e) => {
 };
 
 
-const standardChance = .01;
-const rareChance = .001;
+const standardChance = .04;
+const rareChance = .004;
 
 if (Math.random() < standardChance) {
 	addSamoyedImage(createStandardImage());
