@@ -7,7 +7,7 @@ const addSamoyedImage = (img) => {
 }
 
 const createStandardImage = () => {
-	const imageUrl = 'https://i.ibb.co/tCR0sDp/samoyed-small.png';
+	const imageUrl = chrome.runtime.getURL("images/samoyed-small.png");
 	const img = document.createElement('img');
 	img.dataset.type = 'standard';
 	img.src = imageUrl;
@@ -23,7 +23,7 @@ const createStandardImage = () => {
 }
 
 const createRareImage = () => {
-	const imageUrl = 'https://i.ibb.co/z5Z5nrj/samoyed-rare.png';
+	const imageUrl = chrome.runtime.getURL("images/samoyed-rare.png");
 	const img = document.createElement('img');
 	img.dataset.type = 'rare';
 	img.src = imageUrl;
@@ -47,15 +47,15 @@ const anchorHandler = async (e) => {
 	img.style.transition = 'all 0.5s ease-in-out';
 	img.style.transform = 'scale(0)';
 	setTimeout(() => {
-	  a.remove();
+		a.remove();
 	}, 500);
 
 	const type = img.dataset.type;
 	let result = await chrome.storage.sync.get('count');
 	result = result.count || {};
 	result[type] = 1 + (result[type] || 0);
-	chrome.storage.sync.set({count: result});
-	chrome.runtime.sendMessage({type: 'UPDATE_COUNT', data: {count: result[type], countType: type}});
+	chrome.storage.sync.set({ count: result });
+	chrome.runtime.sendMessage({ type: 'UPDATE_COUNT', data: { count: result[type], countType: type } });
 };
 
 

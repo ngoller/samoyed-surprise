@@ -1,4 +1,4 @@
-chrome.runtime.onMessage.addListener(( {type, data}, sender ) => {
+chrome.runtime.onMessage.addListener(({ type, data }, sender) => {
 	if (type === 'UPDATE_COUNT') {
 		chrome.action.setBadgeText({ text: data.count.toString() });
 	}
