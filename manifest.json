@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Samoyed Surprise",
   "description": "Occasionally hides a samoyed on your page. Click the samoyed to increase your devotion to the land clouds.",
-  "version": "0.0.1.2",
+  "version": "0.0.1.3",
   "content_scripts": [
     {
       "matches": [
