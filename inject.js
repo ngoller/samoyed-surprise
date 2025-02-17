@@ -1,13 +1,41 @@
+let images = [];
+let xs = [];
+let lastUpdateTime = performance.now();
+// How many milliseconds to wait before updating
+const frameMinTime = 20;
+const velocity = .04;
+
+function updateLoop(dt) {
+	const now = performance.now();
+	const frameTime = now - lastUpdateTime;
+	if (frameTime < frameMinTime) {
+		requestAnimationFrame(updateLoop);
+		return;
+	}
+	console.log(`frameTime: ${frameTime}`);
+	const newX = velocity * frameTime;
+	for (let i = 0; i < images.length; i++) {
+		xs[i] -= newX;
+		images[i].style.transform = `translate(${xs[i]}px, ${0}px)`;
+	}
+	lastUpdateTime = now;
+	requestAnimationFrame(updateLoop);
+}
+
+updateLoop(0);
+
 const addSamoyedImage = (img) => {
 	const a = document.createElement('a');
 	a.href = '#';
 	a.appendChild(img);
 	a.addEventListener('click', anchorHandler);
 	document.body.appendChild(a);
+	images.push(img);
+	xs.push(0);
 }
 
 const createStandardImage = () => {
-	const imageUrl = chrome.runtime.getURL("images/samoyed-small.png");
+	const imageUrl = chrome.runtime.getURL("images/white-dog-2.gif");
 	const img = document.createElement('img');
 	img.dataset.type = 'standard';
 	img.src = imageUrl;
@@ -17,7 +45,7 @@ const createStandardImage = () => {
 	img.style.top = `${Math.random() * document.body.scrollHeight}px`;
 	img.style.left = `${Math.random() * document.body.scrollWidth}px`;
 	img.style.zIndex = 1000;
-	img.style.width = '40px';
+	img.style.width = '80px';
 	img.style.height = 'auto';
 	return img;
 }
@@ -59,11 +87,14 @@ const anchorHandler = async (e) => {
 };
 
 
-const standardChance = .04;
+const standardChance = 1.04;
 const rareChance = .004;
 
-if (Math.random() < standardChance) {
-	addSamoyedImage(createStandardImage());
-} else if (Math.random() < rareChance) {
-	addSamoyedImage(createRareImage());
+for (let i = 50; i > 0; i--) {
+	if (Math.random() < standardChance) {
+		addSamoyedImage(createStandardImage());
+	} else if (Math.random() < rareChance) {
+		addSamoyedImage(createRareImage());
+	}
 }
+
